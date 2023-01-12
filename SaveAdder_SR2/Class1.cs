@@ -27,6 +27,7 @@ namespace SaveMod
         public static GameObject SavesMenuScrollBox;
         public static ScrollRect SaveMenuScroll;
         public SceneLoader Loader;
+        public static bool IsFound = true;
 
 
 
@@ -38,6 +39,11 @@ namespace SaveMod
                 SaveMenuScroll = SavesMenuScrollBox.GetComponent<ScrollRect>();
                 SaveMenuScroll.vertical = true;
                 SaveMenuScroll.verticalScrollbarVisibility = ScrollRect.ScrollbarVisibility.Permanent;
+                if (IsFound == false)
+                {
+                    LoggerInstance.Msg("Set Scroll Data!");
+                    IsFound = true;
+                }
             }
         }
 
@@ -62,9 +68,7 @@ namespace SaveMod
 
                 LoggerInstance.Warning("Main Menu UI scene loaded.");
 
-
-
-
+                IsFound = false;
             }
         }
     }
