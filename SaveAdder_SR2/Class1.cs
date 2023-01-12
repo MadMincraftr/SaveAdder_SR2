@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MelonLoader;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
@@ -13,42 +14,65 @@ using Unity;
 using UnityEngineInternal;
 using UnityEngine.UI;
 using System.Threading;
+using Il2CppMonomiPark.SlimeRancher.SceneManagement;
+using Il2CppMonomiPark.SlimeRancher.UI;
 
 namespace SaveMod
 {
+
+
     public class MyMod : MelonMod
     {
-        public AutoSaveDirector director;
-        public GameObject SavesMenuScrollBox;
-        public ScrollRect SaveMenuScroll;
+        public static AutoSaveDirector director;
+        public static GameObject SavesMenuScrollBox;
+        public static ScrollRect SaveMenuScroll;
+        public SceneLoader Loader;
+
+
+
+        public override void OnLateUpdate()
+        {
+            if (GameObject.Find("ButtonsScrollView") != null)
+            {
+                SavesMenuScrollBox = GameObject.Find("ButtonsScrollView");
+                SaveMenuScroll = SavesMenuScrollBox.GetComponent<ScrollRect>();
+                SaveMenuScroll.vertical = true;
+                SaveMenuScroll.verticalScrollbarVisibility = ScrollRect.ScrollbarVisibility.Permanent;
+            }
+        }
+
+        public static void ScrollerSet()
+        {
+
+        }
+
         public override void OnSceneWasLoaded(int buildIndex, string sceneName)
         {
+
             LoggerInstance.Msg("A Scene was loaded!");
             if (sceneName == "GameCore")
             {
                 LoggerInstance.Warning("GameCore scene loaded.");
                 director = GameObject.FindObjectOfType<AutoSaveDirector>();
                 director.saveSlotCount = 99;
+
             }
             else if (sceneName == "MainMenuUI")
             {
-                LoggerInstance.Warning("Main Menu UI scene loaded.");
-                SavesMenuScrollBox = GameObject.Find("ButtonsScrollView");
-                if (SavesMenuScrollBox != null)
-                {
 
-                    LoggerInstance.Msg(SavesMenuScrollBox.name);
-                    SaveMenuScroll = SavesMenuScrollBox.GetComponent<ScrollRect>();
-                    SaveMenuScroll.vertical = true;
-                    SaveMenuScroll.verticalScrollbarVisibility = ScrollRect.ScrollbarVisibility.Permanent;
-                    SaveMenuScroll.m_VSliderWidth = 25;
-                    LoggerInstance.Msg("Set slider data!");
-                }
-                else
-                {
-                    LoggerInstance.Error("Save Menu came back with a NULL? hmm");
-                }
+                LoggerInstance.Warning("Main Menu UI scene loaded.");
+
+
+
+
             }
         }
     }
+
+    public class Searcher : MelonMod
+    {
+        
+    }
+
+    
 }
