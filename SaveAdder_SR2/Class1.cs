@@ -72,11 +72,4 @@ namespace SaveMod
             }
         }
     }
-
-    public class Searcher : MelonMod
-    {
-        
-    }
-
-    
 }
